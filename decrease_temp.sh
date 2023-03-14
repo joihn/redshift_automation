@@ -1,18 +1,15 @@
 #!/bin/bash
 #Decrease temperature
-maxNum=2700
-decNum=135;
+# set -./x
+maxNum=2400
+decNum=250;
 FILE="redshift_settings_temp"
 FILELOCATION="$(dirname "$(realpath "$0")")/$FILE"
-if [ ! -f "$FILELOCATION" ]; then
-    echo "File does not exist, creating"
-    touch "$FILELOCATION"
-    echo "$maxNum" > "$FILELOCATION"
-fi
+APPLYLOCATION="$(dirname "$(realpath "$0")")/apply.sh"
 rsTemp=$(head -n 1 $FILELOCATION)
-if [[ $rsTemp -gt 1000 ]]; then
+if [[ $rsTemp -gt maxNum ]]; then
     let "rsTemp -= decNum";
-    redshift -P -O $rsTemp
     echo "$rsTemp" > "$FILELOCATION"
+    . $APPLYLOCATION 
 fi
 exit 0
