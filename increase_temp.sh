@@ -13,4 +13,8 @@ if [[ $rsTemp -lt $maxNum ]]; then
     echo "$rsTemp" > "$FILELOCATION"
     . $APPLYLOCATION 
 fi
+if [[ $rsTemp -gt 5000 ]]; then
+    redshift -x
+fi
+
 exit 0
